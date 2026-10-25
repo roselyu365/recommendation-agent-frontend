@@ -1,115 +1,36 @@
-# Recommendation Agent Frontend
+# SHU 枢点 · 阅读花园
 
-文学推荐 App 的移动端 Web 前端（React + Vite）。用户在这里与文学沙龙主理人对话，发现作家，约定阅读时间，最终将书目传递给实体阅读器设备。
+从此刻的心情选书，在微信读书的文字旁展开陪读。
 
----
+**[项目展示](https://roselyu365.github.io/recommendation-agent-frontend/) · [开始体验](https://roselyu365.github.io/recommendation-agent-frontend/get-started.html) · [下载自用预览版](https://github.com/roselyu365/recommendation-agent-frontend/releases/tag/v0.4.0-preview.1)**
 
-## 界面流程
+## 想体验真实功能？
 
-```
-首页 / 作家列表
-    ↓
-与推荐 Agent 对话 → 推荐某位作家
-    ↓
-查看作家简介
-    ↓
-与 Virginia Woolf 对话 → 约定阅读时间
-    ↓
-reader-agent 接收书目 → 实体阅读器启动时加载
-```
+1. 下载Release中的 `shu-reader-0.4.0-preview.zip`，完整解压。
+2. 安装Python 3.10+。Mac打开 `start.command`，Windows打开 `start.bat`；或在解压目录终端运行 `python3 launch.py`（Windows可用 `py -3 launch.py`）。
+3. 在本机终端配置**自己的**微信读书Skills Key和OpenAI API Key。密钥不在网页填写，输入不回显。模型费用由自己的API账号承担。
+4. Chrome加载解压目录里的 `copy-event-probe`，按自动打开的本机引导页完成连接。
+5. 同步自己的书架，打开微信读书网页版，选一段文字后点击插件，使用看懂、批注与自由提问。
 
----
+**完整步骤与排障：[INSTALL.md](https://github.com/roselyu365/recommendation-agent-frontend/blob/gh-pages/INSTALL.md)**
 
-## 目录结构
+## 源码在哪里？
 
-```
-recommendation-agent-frontend/
-├── src/
-│   ├── pages/
-│   │   ├── Home.jsx        # 首页：朋友圈动态 + 导航
-│   │   ├── Chat.jsx        # 对话界面（推荐 Agent + Woolf）
-│   │   └── AgentDetail.jsx # 作家详情页
-│   ├── components/
-│   │   └── Avatar.jsx      # 头像组件
-│   ├── api/
-│   │   ├── client.js       # Axios 实例（指向 /api/*）
-│   │   └── chat.js         # 流式对话函数（streamChat / woolfChat）
-│   └── store/
-│       └── user.jsx        # 用户 ID 管理（sessionStorage）
-├── vite.config.js          # 代理配置
-└── package.json
-```
+当前可安装预览版源码位于 [`gh-pages/selfhost`](https://github.com/roselyu365/recommendation-agent-frontend/tree/gh-pages/selfhost)。Release ZIP包含同一批运行源码，不依赖作者的其他仓库或账号。
 
----
+默认分支的 `src/` 是较早的React原型，不是当前安装入口。不要按照旧React开发步骤启动本版。
 
-## 快速开始（新电脑）
+## 当前范围
 
-### 前置条件
+- 自己的微信读书书架、封面、部分进度与阅读链接。
+- 场景适配推荐仍为13本固定资料，其中3本可生成完整卡片；不是全库推荐。
+- 桌面Chrome一次点击取文、可编辑原文、主动模型陪读；背景采用两条预审材料。
+- 本机批注查看、搜索、导出与确认删除；不同用户请用独立Chrome资料夹。
 
-- Node.js 18+
-- recommendation-agent-backend 已在 `localhost:8000` 运行
-- reader-agent 已在 `localhost:8001` 运行（Woolf 对话和书目同步需要）
+这是自用预览版，尚未完成第二位用户从零安装的真实授权验收。Windows入口尚未实机验收，手机App暂不支持。自动检查不能代替真实账号验收。
 
-### 安装与启动
+## 数据与许可
 
-```bash
-cd recommendation-agent-frontend
-
-npm install
-npm run dev
-```
-
-打开 `http://localhost:3000`
-
----
-
-## 代理配置
-
-`vite.config.js` 中定义了两个代理：
-
-```js
-proxy: {
-  '/api': {
-    target: 'http://localhost:8000',   // recommendation-agent-backend
-    rewrite: (path) => path.replace(/^\/api/, ''),
-  },
-  '/mobile': {
-    target: 'http://localhost:8001',   // reader-agent（Woolf 对话 + 书目同步）
-  },
-}
-```
-
-**修改后端地址**：
-- 推荐后端换地址 → 修改 `/api` 的 `target`
-- reader-agent 换地址 → 修改 `/mobile` 的 `target`
-
-生产部署时将代理替换为 Nginx 反向代理或直接修改 `src/api/client.js` 中的 `baseURL`。
-
----
-
-## Woolf 对话与书目同步原理
-
-1. 用户与 Woolf 对话时，前端检测回复里是否出现书名（`《》` 包裹或英文书名）
-2. 检测到书名 → 显示"📅 和伍尔夫约一个阅读时间"按钮
-3. 确认时间后，前端自动调用 `/mobile/set_book` 将书目写入 reader-agent
-4. reader-agent 前端启动时调用 `/mobile/scheduled_book` 读取书目
-
-书名 → slug 映射在 `src/pages/Chat.jsx` 的 `extractBookSlug` 函数中，如需添加新书在此扩展。
-
----
-
-## 修改作家路由
-
-- Woolf 走 reader-agent（`/mobile/*`），其他作家走 recommendation-agent-backend（`/api/*`）
-- 路由逻辑在 `Chat.jsx` 的 `IS_WOOLF` 函数
-- 新增需要走独立 agent 的作家，参照 `IS_WOOLF` 模式扩展即可
-
----
-
-## 生产构建
-
-```bash
-npm run build
-# 产物在 dist/，可部署到任意静态托管（Nginx、Vercel、Netlify 等）
-# 注意：生产环境需将 vite proxy 替换为服务器端反向代理
-```
+发布物不包含作者Key、私人书架、笔记、进度、浏览器资料或模型日志。不要在Issue、聊天或GitHub中上传密钥。
+程序只在本机保存授权；明确点击模型功能后才发送相应选段至OpenAI。
+正式代码许可证仍待确定；第三方封面、引文与作品内容不因预览发布而获得自由再分发许可，详见 [`MATERIALS.md`](https://github.com/roselyu365/recommendation-agent-frontend/blob/gh-pages/selfhost/MATERIALS.md)。
