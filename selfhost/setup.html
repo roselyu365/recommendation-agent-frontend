@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第一次走进阅读花园</title><link rel="stylesheet" href="/setup.css"><script src="/setup.js" defer></script></head><body>
+<header><a class="brand" href="/experience.html">纸间 <small>阅读花园</small></a><a href="/experience.html">回到书架 ↗</a></header>
+<main><section class="intro"><span class="eyebrow">FIRST VISIT / 本机自用</span><h1>把书架接过来，<br>把想法留下来。</h1><p>完成下面几步，就能从自己的书架出发，<br>在微信读书网页版里使用陪读。</p><p class="hint">每个人使用自己的授权和独立 Chrome 资料夹。密钥只在本机配置，不在这里填写。</p></section>
+<section class="paper"><div class="heading"><h2>使用前，看看这里</h2><button id="refresh" class="outline">刷新状态</button></div><p id="status" role="status" aria-live="polite">正在检查本机连接…</p>
+<ol class="steps">
+<li><span class="number">01</span><div><h3>让本机服务运行起来 <span id="service-state" class="state">检查中</span></h3><p>这个页面能正常打开，说明本机入口可访问。终端窗口需要保持运行。</p><code>python3 selfhost.py start</code></div></li>
+<li><span class="number">02</span><div><h3>配置你自己的两类授权</h3><p>在安装目录运行下面的命令。依次输入微信读书 Key、OpenAI API Key 和模型名称，密钥输入不回显。</p><code>python3 selfhost.py init</code><p><a href="https://weread.qq.com/r/weread-skills" target="_blank" rel="noopener noreferrer">获取微信读书授权 ↗</a> · 模型调用费用由自己的 API 账号承担。</p><div class="state-row"><span id="weread-state" class="state">微信读书：检查中</span><span id="model-state" class="state">模型：检查中</span></div><p class="hint">“已配置”只表示本地存在授权，不代表已验证有效。已有配置不会覆盖；更新 Key 请在本机编辑对应授权文件。</p></div></li>
+<li><span class="number">03</span><div><h3>把插件装进桌面 Chrome <span class="state">候选版 0.4.0</span></h3><p>手动打开 Chrome 的扩展管理页，开启开发者模式，加载安装目录下的 <code>copy-event-probe</code> 文件夹。更新已有插件时点击刷新，无需卸载，避免丢失本地批注。</p><p>允许声明的单次剪贴板读取与本机连接权限；没有新增权限。手机版微信读书 App 暂不支持。</p></div></li>
+<li><span class="number">04</span><div><h3>批准本机连接 <span id="plugin-state" class="state">检查中</span></h3><p>在微信读书网页版选中一段，点击插件。面板中可检查连接；点击“连接本机”打开确认页。核对刚刚发起的扩展，再批准。</p><p class="hint">批准不会自动发送原文。回到面板点击“看懂这段”或“发送问题”后，才调用模型。</p><div id="pending"></div><div id="connections"></div></div></li>
+<li><span class="number">05</span><div><h3>同步书架，开始阅读 <span id="shelf-state" class="state">检查中</span></h3><p>回到书架点击同步，用一个场景找书。打开微信读书后，选段一次点击陪读；原文可修改，批注在本机保存。</p><div class="actions"><a class="button" href="/experience.html">去我的书架 ↗</a><a href="/pair.html">检查待批准的连接</a></div></div></li>
+</ol></section>
+<section class="bottom"><h2>想法留在自己的电脑里</h2><p>在插件面板点击“我的批注”，可以按书名、原文和想法查找，导出 JSON 或 Markdown，也能删除单条或清空。批注管理不需要模型服务在线。</p><p>停止本机服务会断开配对、清空本次书架快照；重启后重新同步和连接。批注不会随服务重启消失。同一个 Chrome 资料夹的批注尚未按微信账号隔离。</p><p>撤销连接不会撤回已经发送给模型的请求。删除批注只影响本插件本机记录，不修改微信读书。</p></section>
+</main><footer>仅本地候选版 · 不自动验证授权，不自动发送选段</footer><dialog id="connection-confirm" aria-labelledby="confirm-heading"><form method="dialog"><h2 id="confirm-heading">断开这个插件？</h2><p id="confirm-message"></p><div class="actions"><button value="cancel" class="outline">取消，保留连接</button><button value="revoke">确认断开</button></div></form></dialog></body></html>

@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "SHU 选段陪读",
+  "version": "0.4.0",
+  "description": "一次点击取文。看懂与提问点击后才发送选段；批注只在本机保存。",
+  "permissions": ["activeTab", "scripting", "clipboardRead", "storage"],
+  "host_permissions": ["http://127.0.0.1:8769/*"],
+  "options_page": "notes.html",
+  "action": {"default_title": "选段陪读 · 一次点击取文"},
+  "background": {"service_worker": "worker.js"}
+}
