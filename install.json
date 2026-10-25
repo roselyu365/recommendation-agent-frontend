@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "project": "shu-reader",
+  "channel": "preview",
+  "version": "0.4.0",
+  "release_tag": "v0.4.0-preview.1",
+  "archive_url": "https://github.com/roselyu365/recommendation-agent-frontend/releases/download/v0.4.0-preview.1/shu-reader-0.4.0-preview.zip",
+  "archive_sha256": "7cbca88cbf79fedbfd5e3b4fafb51eed66179dd5b4c29a75f36c71438c7a7d07",
+  "archive_root": "shu-reader",
+  "source_ref": "v0.4.0-preview.1",
+  "source_directory": "selfhost",
+  "development_branch": "main",
+  "python_minimum": "3.10",
+  "dependencies": "Python standard library only",
+  "model_provider": "OpenAI Responses API",
+  "extension_directory": "copy-event-probe",
+  "extension_version": "0.4.0",
+  "local_setup_url": "http://127.0.0.1:8769/setup.html",
+  "agent_guide": "https://github.com/roselyu365/recommendation-agent-frontend/blob/main/INSTALL_AGENT.md",
+  "human_guide": "https://roselyu365.github.io/recommendation-agent-frontend/get-started.html",
+  "limitations": ["single local user", "desktop Chrome", "Windows not physically validated", "13 book profiles and 3 complete card materials", "real second-user authorization acceptance pending"]
+}
