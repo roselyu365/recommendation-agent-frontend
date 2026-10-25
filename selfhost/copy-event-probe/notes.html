@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>我的批注 · 纸间</title><link rel="stylesheet" href="notes.css"><script src="notes-format.js" defer></script><script src="notes.js" defer></script></head><body>
+<header><a class="brand" href="#">纸间 <small>把想法留下来</small></a><a href="http://127.0.0.1:8769/setup.html" target="_blank" rel="noopener noreferrer">使用与连接 ↗</a></header>
+<main><section class="intro"><span class="eyebrow">MARGINALIA / 我的批注</span><h1>曾经停下来的地方。</h1><p>一段原文，一个当时的念头。<br>都留在这台电脑、这个 Chrome 资料夹里。</p></section>
+<section class="connection-panel" aria-label="本机连接"><div><h2>陪读连接</h2><p id="connection-status" role="status">正在检查本机服务…</p></div><div class="actions"><button id="check-connection" class="outline">检查连接</button><button id="connect">连接本机</button><button id="disconnect" class="outline">断开连接</button></div><p class="hint">连接状态只检查本机服务，不调用模型。服务离线也可以管理批注。</p></section>
+<section class="notebook"><div class="toolbar"><div><label for="search">找回一个念头</label><input id="search" type="search" placeholder="搜索书名、原文或想法"></div><div><label for="book">按书籍查看</label><select id="book"><option value="">全部书籍</option></select></div><button id="refresh" class="outline">刷新批注</button></div>
+<div class="export-row"><p id="count" role="status">正在读取本机批注…</p><div class="actions"><button id="export-json" class="outline" disabled>导出 JSON</button><button id="export-markdown" class="outline" disabled>导出 Markdown</button></div></div><p id="status" role="status" aria-live="polite"></p><div id="notes"></div>
+<div class="clear-row"><p>清空会删除本插件在当前 Chrome 资料夹里的全部批注，不受上方筛选影响。<br>不会删除微信读书中的内容；建议先导出。删除后本插件无法恢复。</p><button id="clear" class="danger" disabled>清空全部批注</button></div></section>
+</main><footer>仅本机保存 · 不上传批注 · 切换微信账号不会自动隔离这些记录</footer>
+<dialog id="confirm-dialog" aria-labelledby="confirm-title"><form method="dialog"><h2 id="confirm-title"></h2><p id="confirm-description"></p><label id="confirm-label" hidden>请填写“删除全部”确认<input id="confirm-input" autocomplete="off"></label><div class="actions"><button id="confirm-cancel" value="cancel" class="outline">取消，保留批注</button><button id="confirm-delete" value="delete" class="danger">确认删除</button></div></form></dialog>
+</body></html>

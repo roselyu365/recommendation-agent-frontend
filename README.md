@@ -4,6 +4,14 @@
 
 **[项目展示](https://roselyu365.github.io/recommendation-agent-frontend/) · [开始体验](https://roselyu365.github.io/recommendation-agent-frontend/get-started.html) · [下载自用预览版](https://github.com/roselyu365/recommendation-agent-frontend/releases/tag/v0.4.0-preview.1)**
 
+## 让你的 Agent 帮你安装
+
+把这个仓库链接交给你的Agent，并说：
+
+> 请先阅读仓库的 INSTALL_AGENT.md 和 install.json，帮我安装当前自用预览版并检查启动。我会在本机输入自己的微信读书和模型Key；插件安装或授权需要我操作时，请集中告诉我。不要把密钥放进聊天，也不要自动发起付费模型测试。
+
+[Agent安装指南](INSTALL_AGENT.md)说明检查、安装、验证和升级流程；[版本清单](install.json)指向当前发布文件及SHA256。以后仍使用这个仓库链接，不用寻找新的压缩包地址。
+
 ## 想体验真实功能？
 
 1. 下载Release中的 `shu-reader-0.4.0-preview.zip`，完整解压。
@@ -16,7 +24,7 @@
 
 ## 源码在哪里？
 
-当前可安装预览版源码位于 [`gh-pages/selfhost`](https://github.com/roselyu365/recommendation-agent-frontend/tree/gh-pages/selfhost)。Release ZIP包含同一批运行源码，不依赖作者的其他仓库或账号。
+当前开发源码位于 [`main/selfhost`](https://github.com/roselyu365/recommendation-agent-frontend/tree/main/selfhost)。安装时以 `install.json` 指向的已发布ZIP和标签为准；main开发代码可能先于下一次正式预览发布。程序不依赖作者的其他仓库或账号。
 
 默认分支的 `src/` 是较早的React原型，不是当前安装入口。不要按照旧React开发步骤启动本版。
 
